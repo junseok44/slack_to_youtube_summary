@@ -24,6 +24,10 @@ export async function getVideoInfo(
   if (!video) {
     throw new Error("영상을 찾을 수 없습니다.");
   }
+  console.log(
+    video.snippet?.title,
+    "의 비디오 정보를 성공적으로 가져왔습니다."
+  );
 
   return {
     title: video.snippet?.title || "제목 없음",
@@ -50,6 +54,8 @@ export async function getCaptions(videoId: string): Promise<string> {
           dur: caption.duration,
           text: caption.text.replace(/<[^>]+>/g, ""), // 태그 제거
         }));
+
+        console.log(`언어 '${lang}'의 자막을 성공적으로 가져왔습니다.`);
 
         return JSON.stringify(captionsTextArray);
       }
