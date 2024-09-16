@@ -8,22 +8,30 @@ const router = express.Router();
 
 const slackToken = process.env.SLACK_BOT_TOKEN || "";
 
+const processedEvents = new Set(); // 간단한 예로 메모리에 저장
+
 if (!slackToken) {
   console.error("SLACK_BOT_TOKEN 환경 변수가 설정되지 않았습니다.");
-  process.exit(1); // 환경 변수가 설정되지 않았으면 앱을 종료합니다.
 }
 
 const slackClient = new WebClient(slackToken);
 
 router.post("/events", async (req, res) => {
-  const { type, event } = req.body;
+  const { type, event, event_id } = req.body;
 
   if (type === "url_verification") {
     // 슬랙 URL 검증 요청 처리
     return res.json({ challenge: req.body.challenge });
   }
 
+  if (processedEvents.has(event_id)) {
+    // 이미 처리된 이벤트에 대해 200 응답을 보내고 종료
+    return res.status(200).send("Event already processed.");
+  }
+
   if (event && event.type === "app_mention") {
+    processedEvents.add(event_id);
+
     const { text, channel, ts } = event;
     const youtubeUrl = extractYoutubeUrl(text);
 

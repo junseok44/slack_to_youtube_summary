@@ -8,11 +8,16 @@ import summarizeRoutes from "./routes/summarizeRoutes";
 dotenv.config();
 
 const app = express();
+
 app.use(bodyParser.json());
 
 app.use("/slack", slackRoutes);
 
 app.use("/api", summarizeRoutes);
+
+app.get("/", (req, res) => {
+  res.send("Hello, World!");
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
