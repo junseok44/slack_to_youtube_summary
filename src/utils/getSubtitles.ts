@@ -7,11 +7,23 @@ import striptags from "striptags";
 const fetchData: (url: string) => Promise<string> =
   typeof fetch === "function"
     ? async function fetchData(url: string): Promise<string> {
-        const response = await fetch(url);
+        const response = await fetch(url, {
+          headers: {
+            "User-Agent":
+              "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36,gzip(gfe)",
+            "Accept-Language": "en-US,en;q=0.9",
+          },
+        });
         return await response.text();
       }
     : async function fetchData(url: string): Promise<string> {
-        const { data } = await axios.get(url);
+        const { data } = await axios.get(url, {
+          headers: {
+            "User-Agent":
+              "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36,gzip(gfe)",
+            "Accept-Language": "en-US,en;q=0.9",
+          },
+        });
         return data;
       };
 
@@ -37,8 +49,6 @@ export async function getSubtitles({
   lang?: string;
 }): Promise<SubtitleLine[]> {
   const data = await fetchData(`https://youtube.com/watch?v=${videoID}`);
-
-  console.log(`Fetched data for video: ${videoID}`, data);
 
   // * ensure we have access to captions data
   if (!data.includes("captionTracks"))
