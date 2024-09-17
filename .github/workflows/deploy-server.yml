@@ -21,8 +21,20 @@ jobs:
           EC2_USER: ${{ secrets.EC2_USER }}
         run: |
           ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << 'EOF'
-            cd /home/ubuntu  # 프로젝트 디렉토리로 이동
-            git pull origin master      # 최신 코드 가져오기
-            npm install                 # 의존성 설치
-            pm2 restart all             # PM2로 애플리케이션 재실행
+            # NVM 환경 설정을 위해 nvm.sh 로드
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # NVM 스크립트 로드
+            nvm use default  # 기본 Node.js 버전 활성화
+
+            # 프로젝트 디렉토리로 이동
+            cd /home/ubuntu/slack_to_youtube_summary
+            
+            # 최신 코드 가져오기
+            git pull origin master
+
+            # 의존성 설치
+            npm install
+
+            # PM2를 사용하여 애플리케이션 재실행
+            pm2 restart all
           EOF
