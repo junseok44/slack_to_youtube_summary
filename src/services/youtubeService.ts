@@ -1,7 +1,7 @@
 // src/services/youtubeService.ts
 import dotenv from "dotenv";
 import { google } from "googleapis";
-import { getSubtitles } from "youtube-captions-scraper";
+import { getSubtitles } from "../utils/getSubtitles";
 
 dotenv.config();
 
