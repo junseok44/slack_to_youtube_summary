@@ -10,8 +10,13 @@ const fetchData: (url: string) => Promise<string> =
         const response = await fetch(url, {
           headers: {
             "User-Agent":
-              "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36,gzip(gfe)",
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
             "Accept-Language": "en-US,en;q=0.9",
+            Referer: "https://www.youtube.com/",
+            Connection: "keep-alive",
+            Accept:
+              "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+            DNT: "1", // Do Not Track: 사용자 추적 비활성화 요청
           },
         });
         return await response.text();
@@ -20,8 +25,13 @@ const fetchData: (url: string) => Promise<string> =
         const { data } = await axios.get(url, {
           headers: {
             "User-Agent":
-              "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36,gzip(gfe)",
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
             "Accept-Language": "en-US,en;q=0.9",
+            Referer: "https://www.youtube.com/",
+            Connection: "keep-alive",
+            Accept:
+              "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+            DNT: "1", // Do Not Track: 사용자 추적 비활성화 요청
           },
         });
         return data;
