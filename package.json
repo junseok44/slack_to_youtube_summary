@@ -19,6 +19,7 @@
     "googleapis": "^105.0.0",
     "he": "^1.2.0",
     "loadash": "^1.0.0",
+    "mongoose": "^8.6.3",
     "xml2js": "^0.4.23",
     "youtube-captions-scraper": "^2.0.3"
   },
