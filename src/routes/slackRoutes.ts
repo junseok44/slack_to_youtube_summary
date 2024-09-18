@@ -45,8 +45,6 @@ router.post("/events", async (req, res) => {
       const captions = await getCaptions(videoInfo.videoId);
       const summaryData = await processSummary(captions, videoInfo);
 
-      if (!summaryData) throw new Error("요약 데이터가 없습니다.");
-
       // 사람이 읽기 쉬운 형태로 변환
       const readableSummary = formatSummary(summaryData);
 

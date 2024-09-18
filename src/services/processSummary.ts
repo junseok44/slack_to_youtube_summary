@@ -8,7 +8,7 @@ async function processSummary(captions: string, videoInfo: { title: string }) {
     console.log(response);
 
     if (!response) {
-      throw new Error("요약 데이터가 없습니다.");
+      throw new Error("클로드 서비스에서 응답을 받지 못했습니다.");
     }
 
     let data = parseClaudeResponse(response);
@@ -20,6 +20,11 @@ async function processSummary(captions: string, videoInfo: { title: string }) {
     return data;
   } catch (error) {
     console.error("요약 데이터 생성 중 오류가 발생했습니다:", error);
+    if (error instanceof Error) {
+      throw error;
+    } else {
+      throw Error("요약 데이터 생성 중 오류가 발생했습니다.");
+    }
   }
 }
 
