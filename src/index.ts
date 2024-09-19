@@ -6,6 +6,7 @@ import slackRoutes from "./routes/slackRoutes";
 import summarizeRoutes from "./routes/summarizeRoutes";
 import connectDB from "./config/db"; // DB 연결 파일 import
 import summary from "./models/summary";
+import { convertTimeToSeconds } from "./utils/convertTimeToSeconds";
 
 dotenv.config();
 
@@ -23,14 +24,15 @@ app.get("/summary/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    // MongoDB에서 요약 데이터 조회
     const summaryData = await summary.findById(id);
 
     if (!summaryData) {
       return res.status(404).send("요약 데이터를 찾을 수 없습니다.");
     }
 
-    // HTML로 데이터를 렌더링하여 반환
+    // YouTube 비디오 링크 생성
+    const videoLink = `https://www.youtube.com/watch?v=${summaryData.videoId}`;
+
     res.send(`
       <html>
         <head>
@@ -64,15 +66,17 @@ app.get("/summary/:id", async (req, res) => {
         </head>
         <body>
           <div class="summary">
-            <h2>요약 - ${summaryData.mainTopics}</h2>
+            <h2>${summaryData.mainTopics}</h2>
+            <p><a href="${videoLink}" target="_blank">YouTube 비디오 보기</a></p>
             <ul>
               ${summaryData.timeline
                 .map(
                   (item: any) => `
                 <li class="timeline-item">
                   <h3>${item.title}</h3>
-                  <p>시작 시간: ${item.startTime}</p>
-                  <p><strong>요약:</strong></p>
+                  <p>시작 시간: <a href="${videoLink}&t=${convertTimeToSeconds(
+                    item.startTime
+                  )}" target="_blank">${item.startTime}</a></p>
                   <ul>
                     ${item.summary
                       .map((summaryPoint: string) => `<li>${summaryPoint}</li>`)
