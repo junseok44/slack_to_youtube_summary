@@ -107,7 +107,7 @@ router.post("/summary-link", async (req, res) => {
     await slackClient.chat.postMessage({
       channel: channel,
       thread_ts: ts,
-      text: `요약이 완료되었습니다. 여기서 확인하세요: ${summaryLink}`,
+      text: `지금 막 요약이 완료되었어요!\n ${summaryLink}`,
     });
 
     res.status(200).send("요약 링크가 성공적으로 전송되었습니다.");
