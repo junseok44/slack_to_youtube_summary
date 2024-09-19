@@ -1,6 +1,7 @@
 // src/services/claudeService.ts
 import Anthropic from "@anthropic-ai/sdk";
 import dotenv from "dotenv";
+import { groupCaptions } from "../utils/groupCaptions";
 import { CaptionItem } from "../@types/summary";
 import { systemMessage } from "../constants/prompts";
 
@@ -11,7 +12,7 @@ const CLAUDE_API_KEY = process.env.CLAUDE_API_KEY;
 export async function summarizeText(captionsJson: string): Promise<string> {
   const captionsArray: CaptionItem[] = JSON.parse(captionsJson);
 
-  const captionsText = captionsArray.map((item) => item.text).join(" ");
+  const captionsText = groupCaptions(captionsArray);
 
   const anthropic = new Anthropic({
     apiKey: CLAUDE_API_KEY,

@@ -1,6 +1,5 @@
 import express from "express";
-import processSummary from "../services/processSummary";
-import { getCaptions, getVideoInfo } from "../services/youtubeService";
+import { processYoutubeSummary } from "../services/processYoutubeSummary";
 import { saveSummaryToFile } from "../utils/saveSummaryToFile"; // 파일 저장 유틸리티
 
 const router = express.Router();
@@ -10,9 +9,7 @@ router.post("/summarize", async (req, res) => {
 
   console.log(`${youtubeUrl} 요청을 처리하는 중입니다....`);
   try {
-    const videoInfo = await getVideoInfo(youtubeUrl);
-    const captions = await getCaptions(videoInfo.videoId);
-    const summaryData = await processSummary(captions, videoInfo);
+    const { videoInfo, summaryData } = await processYoutubeSummary(youtubeUrl);
 
     if (!summaryData) throw new Error("요약 데이터가 없습니다.");
 
