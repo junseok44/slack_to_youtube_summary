@@ -37,56 +37,104 @@ app.get("/summary/:id", async (req, res) => {
       <html>
         <head>
           <title>요약 보기</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1">
           <style>
+            @import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap');
+            
             body {
-              font-family: Arial, sans-serif;
+              font-family: "Nanum Myeongjo", serif;
+              font-weight: 400;
+              line-height: 1.4;
+              color: #333;
+              margin: 0;
+              padding: 0;
+              background-color: #f4f4f4;
+            }
+            .container {
+              max-width: 1200px;
+              margin: 0 auto;
               padding: 20px;
             }
             .summary {
-              max-width: 800px;
-              margin: 0 auto;
+              background-color: #fff;
+              border-radius: 8px;
+              box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+              padding: 30px;
             }
-            h2 {
+            h1 {
+              font-family: "Nanum Myeongjo", serif;
+              font-weight: 800;
+              font-size: 2.2em;
+              margin-bottom: 15px;
+              color: #2c3e50;
               text-align: center;
             }
-            .timeline-item {
+            .video-link {
+              display: inline-block;
               margin-bottom: 20px;
+              color: #3498db;
+              text-decoration: none;
+              font-weight: 700;
             }
-            .timeline-item h3 {
-              color: #333;
+            .video-link:hover {
+              text-decoration: underline;
             }
-            ul {
+            .timeline-item {
+              margin-bottom: 40px;
+              border-left: 3px solid #3498db;
+              padding-left: 15px;
+            }
+            .timeline-item h2 {
+              font-family: "Nanum Myeongjo", serif;
+              font-weight: 700;
+              font-size: 1.3em;
+              color: #2c3e50;
+              margin-bottom: 5px;
+            }
+            .timeline-item .time {
+              font-size: 0.9em;
+              color: #7f8c8d;
+              margin-bottom: 5px;
+            }
+            .timeline-item ul {
               padding-left: 20px;
+              margin-top: 5px;
             }
-            li {
-              margin-bottom: 10px;
-              list-style-type: disc;
+            .timeline-item li {
+              margin-bottom: 5px;
+            }
+            @media (max-width: 1300px) {
+              .container {
+                width: 95%;
+              }
             }
           </style>
         </head>
         <body>
-          <div class="summary">
-            <h2>${summaryData.mainTopics}</h2>
-            <p><a href="${videoLink}" target="_blank">YouTube 비디오 보기</a></p>
-            <ul>
+          <div class="container">
+            <div class="summary">
+              <h1>${summaryData.mainTopics}</h1>
+              <a href="${videoLink}" target="_blank" class="video-link">YouTube 비디오 보기</a>
               ${summaryData.timeline
                 .map(
                   (item: any) => `
-                <li class="timeline-item">
-                  <h3>${item.title}</h3>
-                  <p>시작 시간: <a href="${videoLink}&t=${convertTimeToSeconds(
+                <div class="timeline-item">
+                  <h2>${item.title}</h2>
+                  <div class="time">
+                    시작 시간: <a href="${videoLink}&t=${convertTimeToSeconds(
                     item.startTime
-                  )}" target="_blank">${item.startTime}</a></p>
+                  )}" target="_blank">${item.startTime}</a>
+                  </div>
                   <ul>
                     ${item.summary
                       .map((summaryPoint: string) => `<li>${summaryPoint}</li>`)
                       .join("")}
                   </ul>
-                </li>
+                </div>
               `
                 )
                 .join("")}
-            </ul>
+            </div>
           </div>
         </body>
       </html>
