@@ -37,7 +37,7 @@ app.get("/summary/:id", async (req, res) => {
       <html>
         <head>
           <title>요약 보기</title>
-          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
           <style>
             @import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap');
             
@@ -49,6 +49,7 @@ app.get("/summary/:id", async (req, res) => {
               margin: 0;
               padding: 0;
               background-color: #f4f4f4;
+              font-size: 16px;
             }
             .container {
               max-width: 1200px;
