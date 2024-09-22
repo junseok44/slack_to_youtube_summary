@@ -1,6 +1,7 @@
 import express from "express";
 import { processYoutubeSummary } from "../services/processYoutubeSummary";
 import { saveSummaryToFile } from "../utils/saveSummaryToFile"; // 파일 저장 유틸리티
+import Summary from "../models/summary";
 
 const router = express.Router();
 
@@ -15,6 +16,15 @@ router.post("/summarize", async (req, res) => {
 
     // JSON 데이터를 파일에 저장
     saveSummaryToFile(summaryData, videoInfo);
+
+    const newSummary = new Summary({
+      mainTopics: summaryData.mainTopics,
+      totalSummary: summaryData.totalSummary, // 새로 추가된 필드
+      timeline: summaryData.timeline,
+      videoId: videoInfo.videoId,
+    });
+
+    await newSummary.save();
 
     res.json({
       summaryData,

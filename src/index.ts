@@ -62,6 +62,26 @@ app.get("/summary/:id", async (req, res) => {
               box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
               padding: 30px;
             }
+            .main-summary {
+              background-color: #f0f0f0;
+              border-radius: 8px;
+              padding: 20px;
+              margin-bottom: 30px;
+              font-family: "Nanum Myeongjo", serif;
+            }
+            .main-summary h2 {
+              font-weight: 700;
+              font-size: 1.2em;
+              color: #2c3e50;
+              margin-bottom: 10px;
+            }
+            .main-summary ul {
+              padding-left: 20px;
+              margin: 0;
+            }
+            .main-summary li {
+              margin-bottom: 5px;
+            }
             h1 {
               font-family: "Nanum Myeongjo", serif;
               font-weight: 800;
@@ -116,6 +136,20 @@ app.get("/summary/:id", async (req, res) => {
             <div class="summary">
               <h1>${summaryData.mainTopics}</h1>
               <a href="${videoLink}" target="_blank" class="video-link">YouTube 비디오 보기</a>
+              ${
+                summaryData.totalSummary && summaryData.totalSummary.length > 0
+                  ? `
+                <div class="main-summary">
+                  <h2>주요 요약</h2>
+                  <ul>
+                    ${summaryData.totalSummary
+                      .map((item: string) => `<li>${item}</li>`)
+                      .join("")}
+                  </ul>
+                </div>
+              `
+                  : ""
+              }
               ${summaryData.timeline
                 .map(
                   (item: any) => `

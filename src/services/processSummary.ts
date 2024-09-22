@@ -5,8 +5,6 @@ async function processSummary(captions: string, videoInfo: { title: string }) {
   try {
     let response = await summarizeText(captions);
 
-    console.log(response);
-
     if (!response) {
       throw new Error("클로드 서비스에서 응답을 받지 못했습니다.");
     }

@@ -15,5 +15,6 @@ export interface TimelineItem {
 
 export interface SummaryData {
   mainTopics: string;
+  totalSummary: string[]; // 새로 추가된 필드
   timeline: TimelineItem[];
 }

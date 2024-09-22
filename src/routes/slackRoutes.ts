@@ -74,7 +74,7 @@ router.post("/summary-link", async (req, res) => {
     return res.json({ challenge: req.body.challenge });
   }
 
-  // 중복 이벤트 처리 방지
+  // 중복 이벤트 처리 ���지
   if (processedEvents.has(event_id)) {
     return res.status(200).send("Event already processed.");
   }
@@ -94,6 +94,7 @@ router.post("/summary-link", async (req, res) => {
     // MongoDB에 요약 데이터 저장
     const newSummary = new Summary({
       mainTopics: summaryData.mainTopics,
+      totalSummary: summaryData.totalSummary, // 새로 추가된 필드
       timeline: summaryData.timeline,
       videoId: videoInfo.videoId,
     });

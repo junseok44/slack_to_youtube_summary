@@ -15,7 +15,10 @@ export const processYoutubeSummary = async (youtubeUrl: string) => {
       summaryData,
     };
   } catch (error: any) {
-    console.error("요약 처리 중 오류 발생:", error.message);
-    throw new Error("요약 처리 실패");
+    if (error instanceof Error) {
+      throw error;
+    } else {
+      throw new Error("유튜브 요약 처리 중 오류가 발생했습니다.");
+    }
   }
 };

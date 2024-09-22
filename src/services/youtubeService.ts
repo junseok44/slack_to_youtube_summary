@@ -37,7 +37,7 @@ export async function getVideoInfo(
 }
 
 export async function getCaptions(videoId: string): Promise<string> {
-  const languages = ["ko", "en"]; // 우선순위로 언어 설정: 한국어, 영어
+  const languages = ["ko", "en", "jp"]; // 우선순위로 언어 설정: 한국어, 영어
 
   for (const lang of languages) {
     try {
