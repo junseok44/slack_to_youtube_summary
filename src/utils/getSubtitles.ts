@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getSub } from "./getSub";
 
 // 자막 데이터의 인터페이스 정의
 interface SubtitleLine {
@@ -48,5 +49,13 @@ export async function getSubtitles({
   lang?: string;
 }): Promise<SubtitleLine[]> {
   // 제공된 API를 사용하여 자막 데이터를 가져옵니다.
-  return await fetchSubtitles(videoID);
+  // return await fetchSubtitles(videoID);
+
+  const response = await getSub({
+    videoId: videoID,
+  });
+
+  if (!response) throw Error("자막을 찾을 수 없습니다.");
+
+  return response;
 }

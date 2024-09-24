@@ -1,14 +1,15 @@
 // src/index.ts
-import bodyParser from "body-parser";
+
 import dotenv from "dotenv";
+dotenv.config();
+
+import bodyParser from "body-parser";
 import express from "express";
 import slackRoutes from "./routes/slackRoutes";
 import summarizeRoutes from "./routes/summarizeRoutes";
 import connectDB from "./config/db"; // DB 연결 파일 import
 import summary from "./models/summary";
 import { convertTimeToSeconds } from "./utils/convertTimeToSeconds";
-
-dotenv.config();
 
 const app = express();
 
